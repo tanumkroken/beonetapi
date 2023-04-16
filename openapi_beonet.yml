@@ -1,0 +1,3257 @@
+openapi: 3.0.0
+x-stoplight:
+  id: joagt9ef0uj8f
+info:
+  title: beoremote_api
+  version: '1.0'
+  description: 'Control Bang Olufsen products supporting the beonet http interface. The api provides control of product volume and sound settings, product sources, play control and polling for product state and currently playing information. '
+  contact:
+    name: Ole Chr. Astrup
+    email: tanumkroken@astrup.info
+  license:
+    url: 'https://opensource.org/license/mit/'
+    name: MIT
+servers:
+  - description: product
+    url: 'http://BeoSound-Core-id.local:8080'
+paths:
+  /BeoNotify/Notifications:
+    get:
+      summary: Product Notifications
+      tags:
+        - Notifications
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  notification:
+                    type: object
+                    properties:
+                      timestamp:
+                        type: string
+                      type:
+                        type: string
+                      kind:
+                        type: string
+                      data:
+                        type: object
+                        properties:
+                          primary:
+                            type: string
+                          primaryJid:
+                            type: string
+                          primaryExperience:
+                            $ref: '#/components/schemas/primaryExperience'
+              examples:
+                First poll response:
+                  value:
+                    value:
+                      notification:
+                        timestamp: '2023-03-12T13:26:58.262595'
+                        type: SOURCE
+                        kind: source
+                        data:
+                          primary: 'spotify:my_id@products.bang-olufsen.com'
+                          primaryJid: my_id@products.bang-olufsen.com
+                          primaryExperience:
+                            source:
+                              id: 'spotify:my_id@products.bang-olufsen.com'
+                              friendlyName: Spotify
+                              sourceType:
+                                type: SPOTIFY
+                              category: MUSIC
+                              inUse: true
+                              profile: ''
+                              linkable: false
+                              recommendedIrMapping:
+                                - format: 0
+                                  unit: 0
+                                  command: 146
+                                - format: 11
+                                  unit: 0
+                                  command: 150
+                              contentProtection:
+                                schemeList:
+                                  - PROPRIETARY
+                              embeddedBinary:
+                                schemeList:
+                                  - SPOTIFY_EMBEDDED_SDK
+                              product:
+                                jid: my_id@products.bang-olufsen.com
+                                friendlyName: B&O
+                            listener:
+                              - my_id@products.bang-olufsen.com
+                            lastUsed: '2023-03-12T11:45:45.844000'
+                            state: play
+                            _capabilities:
+                              supportedNotifications:
+                                - type: SOURCE
+                                  kind: source
+                                - type: SOURCE_EXPERIENCE_CHANGED
+                                  kind: source
+                                - type: PLAY_QUEUE_CHANGED
+                                  kind: playing
+                                - type: NOW_PLAYING_ENDED
+                                  kind: playing
+                                - type: STREAMING_STATUS
+                                  kind: streaming
+                                - type: PROGRESS_INFORMATION
+                                  kind: playing
+                                - type: NOW_PLAYING_STORED_MUSIC
+                                  kind: playing
+                2nd  response:
+                  value:
+                    notification:
+                      timestamp: '2023-03-13T17:03:05.420796'
+                      type: NOW_PLAYING_STORED_MUSIC
+                      kind: playing
+                      data:
+                        name: Shadows
+                        duration: 216
+                        trackImage:
+                          - url: 'https://i.scdn.co/image/ab67616d0000b273838b225fe44ff4e54ae952c4'
+                            size: large
+                            mediatype: image/jpg
+                        artist: Herman Fred Trio
+                        artistImage: []
+                        album: Shadows
+                        albumImage:
+                          - url: 'https://i.scdn.co/image/ab67616d0000b273838b225fe44ff4e54ae952c4'
+                            size: large
+                            mediatype: image/jpg
+                        genre: ''
+                        playQueueItemId: 'spotify:playlist:37i9dQZF1DWV7EzJMK2FUI'
+                3rd response:
+                  value:
+                    notification:
+                      timestamp: '2023-03-13T17:03:05.421163'
+                      type: PROGRESS_INFORMATION
+                      kind: playing
+                      data:
+                        state: play
+                        position: 172
+                        totalDuration: 216
+                        seekSupported: true
+                        playQueueItemId: 'spotify:playlist:37i9dQZF1DWV7EzJMK2FUI'
+            application/xml:
+              examples:
+                Example 1:
+                  value: '{"value":{"notification":{"timestamp":"2023-03-12T13:26:58.262595","type":"SOURCE","kind":"source","data":{"primary":"spotify:my_id@products.bang-olufsen.com","primaryJid":"my_id@products.bang-olufsen.com","primaryExperience":{"source":{"id":"spotify:my_id@products.bang-olufsen.com","friendlyName":"Spotify","sourceType":{"type":"SPOTIFY"},"category":"MUSIC","inUse":true,"profile":"","linkable":false,"recommendedIrMapping":[{"format":0,"unit":0,"command":146},{"format":11,"unit":0,"command":150}],"contentProtection":{"schemeList":["PROPRIETARY"]},"embeddedBinary":{"schemeList":["SPOTIFY_EMBEDDED_SDK"]},"product":{"jid":"my_id@products.bang-olufsen.com","friendlyName":"B&O"}},"listener":["my_id@products.bang-olufsen.com"],"lastUsed":"2023-03-12T11:45:45.844000","state":"play","_capabilities":{"supportedNotifications":[{"type":"SOURCE","kind":"source"},{"type":"SOURCE_EXPERIENCE_CHANGED","kind":"source"},{"type":"PLAY_QUEUE_CHANGED","kind":"playing"},{"type":"NOW_PLAYING_ENDED","kind":"playing"},{"type":"STREAMING_STATUS","kind":"streaming"},{"type":"PROGRESS_INFORMATION","kind":"playing"},{"type":"NOW_PLAYING_STORED_MUSIC","kind":"playing"}]}}}}}}'
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    value:
+                      notification:
+                        timestamp: '2023-03-12T13:26:58.262595'
+                        type: SOURCE
+                        kind: source
+                        data:
+                          primary: 'spotify:my_id@products.bang-olufsen.com'
+                          primaryJid: my_id@products.bang-olufsen.com
+                          primaryExperience:
+                            source:
+                              id: 'spotify:my_id@products.bang-olufsen.com'
+                              friendlyName: Spotify
+                              sourceType:
+                                type: SPOTIFY
+                              category: MUSIC
+                              inUse: true
+                              profile: ''
+                              linkable: false
+                              recommendedIrMapping:
+                                - format: 0
+                                  unit: 0
+                                  command: 146
+                                - format: 11
+                                  unit: 0
+                                  command: 150
+                              contentProtection:
+                                schemeList:
+                                  - PROPRIETARY
+                              embeddedBinary:
+                                schemeList:
+                                  - SPOTIFY_EMBEDDED_SDK
+                              product:
+                                jid: my_id@products.bang-olufsen.com
+                                friendlyName: B&O
+                            listener:
+                              - my_id@products.bang-olufsen.com
+                            lastUsed: '2023-03-12T11:45:45.844000'
+                            state: play
+                            _capabilities:
+                              supportedNotifications:
+                                - type: SOURCE
+                                  kind: source
+                                - type: SOURCE_EXPERIENCE_CHANGED
+                                  kind: source
+                                - type: PLAY_QUEUE_CHANGED
+                                  kind: playing
+                                - type: NOW_PLAYING_ENDED
+                                  kind: playing
+                                - type: STREAMING_STATUS
+                                  kind: streaming
+                                - type: PROGRESS_INFORMATION
+                                  kind: playing
+                                - type: NOW_PLAYING_STORED_MUSIC
+                                  kind: playing
+                properties:
+                  value:
+                    type: object
+                    properties:
+                      notification:
+                        type: object
+                        properties:
+                          timestamp:
+                            type: string
+                          type:
+                            type: string
+                          kind:
+                            type: string
+                          data:
+                            type: object
+                            properties:
+                              primary:
+                                type: string
+                              primaryJid:
+                                type: string
+                              primaryExperience:
+                                $ref: '#/components/schemas/primaryExperience'
+      operationId: get-notifications
+      description: |-
+        The notification stream uses Long-polling to get real-time status updates.
+
+        Examples of data available in the notification stream:
+        - Cover art
+        - Metadata (song / artist / album / genre)
+        - Source
+        - Volume
+        - Play state
+        - Song progress
+        - Friendly name
+        - Standby status
+    parameters: []
+  /BeoDevice/regionalSettings:
+    get:
+      summary: Product Regional Settings
+      tags:
+        - Settings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    profile:
+                      name: regionalSettingsProfile
+                      version: 1
+                      _links:
+                        self:
+                          href: ./
+                      regionalSettings:
+                        dateTime:
+                          dateTime: '2023-03-12T21:30:46'
+                        dateTimeMode:
+                          dateTimeMode: Automatic
+                          _capabilities:
+                            editable:
+                              - dateTimeMode
+                            value:
+                              dateTimeMode:
+                                - Automatic
+                                - Manually
+                          _links:
+                            /relation/modify:
+                              href: ./dateTimeMode
+                        daylightSaving:
+                          daylightSaving: Automatic
+                          inDaylightSaving: false
+                        timeZone:
+                          timeZone: Automatic
+                          inTimeZone: 'UTC+01:00'
+                        country:
+                          country: 'NO'
+                          _capabilities:
+                            editable:
+                              - country
+                            value:
+                              country:
+                                - AD
+                                - AE
+                                - AF
+                                - AG
+                                - AI
+                                - AL
+                                - AM
+                                - AO
+                                - AQ
+                                - AR
+                                - AS
+                                - AT
+                                - AU
+                                - AW
+                                - AX
+                                - AZ
+                                - BA
+                                - BB
+                                - BD
+                                - BE
+                                - BF
+                                - BG
+                                - BH
+                                - BI
+                                - BJ
+                                - BL
+                                - BM
+                                - BN
+                                - BO
+                                - BQ
+                                - BR
+                                - BS
+                                - BT
+                                - BV
+                                - BW
+                                - BY
+                                - BZ
+                                - CA
+                                - CC
+                                - CD
+                                - CF
+                                - CG
+                                - CH
+                                - CI
+                                - CK
+                                - CL
+                                - CM
+                                - CN
+                                - CO
+                                - CR
+                                - CU
+                                - CV
+                                - CW
+                                - CX
+                                - CY
+                                - CZ
+                                - DE
+                                - DJ
+                                - DK
+                                - DM
+                                - DO
+                                - DZ
+                                - EC
+                                - EE
+                                - EG
+                                - EH
+                                - ER
+                                - ES
+                                - ET
+                                - FI
+                                - FJ
+                                - FK
+                                - FM
+                                - FO
+                                - FR
+                                - GA
+                                - GB
+                                - GD
+                                - GE
+                                - GF
+                                - GG
+                                - GH
+                                - GI
+                                - GL
+                                - GM
+                                - GN
+                                - GP
+                                - GQ
+                                - GR
+                                - GS
+                                - GT
+                                - GU
+                                - GW
+                                - GY
+                                - HK
+                                - HM
+                                - HN
+                                - HR
+                                - HT
+                                - HU
+                                - ID
+                                - IE
+                                - IL
+                                - IM
+                                - IN
+                                - IO
+                                - IQ
+                                - IR
+                                - IS
+                                - IT
+                                - JE
+                                - JM
+                                - JO
+                                - JP
+                                - KE
+                                - KG
+                                - KH
+                                - KI
+                                - KM
+                                - KN
+                                - KP
+                                - KR
+                                - KW
+                                - KY
+                                - KZ
+                                - LA
+                                - LB
+                                - LC
+                                - LI
+                                - LK
+                                - LR
+                                - LS
+                                - LT
+                                - LU
+                                - LV
+                                - LY
+                                - MA
+                                - MC
+                                - MD
+                                - ME
+                                - MF
+                                - MG
+                                - MH
+                                - MK
+                                - ML
+                                - MM
+                                - MN
+                                - MO
+                                - MP
+                                - MQ
+                                - MR
+                                - MS
+                                - MT
+                                - MU
+                                - MV
+                                - MW
+                                - MX
+                                - MY
+                                - MZ
+                                - NA
+                                - NC
+                                - NE
+                                - NF
+                                - NG
+                                - NI
+                                - NL
+                                - 'NO'
+                                - NP
+                                - NR
+                                - NU
+                                - NZ
+                                - OM
+                                - PA
+                                - PE
+                                - PF
+                                - PG
+                                - PH
+                                - PK
+                                - PL
+                                - PM
+                                - PN
+                                - PR
+                                - PS
+                                - PT
+                                - PW
+                                - PY
+                                - QA
+                                - RE
+                                - RO
+                                - RS
+                                - RU
+                                - RW
+                                - SA
+                                - SB
+                                - SC
+                                - SD
+                                - SE
+                                - SG
+                                - SH
+                                - SI
+                                - SJ
+                                - SK
+                                - SL
+                                - SM
+                                - SN
+                                - SO
+                                - SR
+                                - SS
+                                - ST
+                                - SV
+                                - SX
+                                - SY
+                                - SZ
+                                - TC
+                                - TD
+                                - TF
+                                - TG
+                                - TH
+                                - TJ
+                                - TK
+                                - TL
+                                - TM
+                                - TN
+                                - TO
+                                - TR
+                                - TT
+                                - TV
+                                - TW
+                                - TZ
+                                - UA
+                                - UG
+                                - UM
+                                - US
+                                - UY
+                                - UZ
+                                - VA
+                                - VC
+                                - VE
+                                - VG
+                                - VI
+                                - VN
+                                - VU
+                                - WF
+                                - WS
+                                - YE
+                                - YT
+                                - ZA
+                                - ZM
+                                - ZW
+                          _links:
+                            /relation/modify:
+                              href: ./country
+                        region:
+                          region: Automatic
+                          _capabilities:
+                            editable:
+                              - region
+                            value:
+                              region:
+                                - Automatic
+                          _links:
+                            /relation/modify:
+                              href: ./region
+                        language:
+                          language: en_GB
+                          _capabilities:
+                            editable:
+                              - language
+                            value:
+                              language:
+                                - da_DK
+                                - de_DE
+                                - en_GB
+                                - es_ES
+                                - fr_FR
+                                - it_IT
+                                - ja_JP
+                                - ko_KR
+                                - nl_NL
+                                - pt_PT
+                                - ru_RU
+                                - sv_SE
+                                - zh_CN
+                                - zh_TW
+                          _links:
+                            /relation/modify:
+                              href: ./language
+                properties:
+                  profile:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      version:
+                        type: integer
+                      _links:
+                        type: object
+                        properties:
+                          self:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                      regionalSettings:
+                        type: object
+                        properties:
+                          dateTime:
+                            $ref: '#/components/schemas/dateTime'
+                          dateTimeMode:
+                            $ref: '#/components/schemas/dateTimeMode'
+                          daylightSaving:
+                            $ref: '#/components/schemas/dayLightSaving'
+                          timeZone:
+                            $ref: '#/components/schemas/dayLightSaving'
+                          country:
+                            $ref: '#/components/schemas/country'
+                          region:
+                            $ref: '#/components/schemas/region'
+                          language:
+                            $ref: '#/components/schemas/language'
+      operationId: get-region-settings
+      description: The product region profile settings.
+      parameters: []
+  /BeoZone/Zone/Sound/Volume/Speaker/Level:
+    get:
+      summary: Product Volume Level
+      tags:
+        - Volume
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  level:
+                    type: integer
+                  _capabilities:
+                    type: object
+                    properties:
+                      editable:
+                        type: array
+                        items:
+                          type: string
+                  _links:
+                    type: object
+                    properties:
+                      /relation/modify:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                x-examples:
+                  Example 1:
+                    level: 26
+                    _capabilities:
+                      editable:
+                        - level
+                    _links:
+                      /relation/modify:
+                        href: ./
+              examples:
+                Get the volume level:
+                  value:
+                    level: 26
+                    _capabilities:
+                      editable:
+                        - level
+                    _links:
+                      /relation/modify:
+                        href: ./
+      operationId: get-volume-level
+      description: Poll current volume level of the product.
+    put:
+      summary: Product Volume Level
+      operationId: put-volume-level
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                level:
+                  type: integer
+              x-examples:
+                Example 1:
+                  level: 60
+            examples:
+              Set the product volume level to 60%:
+                value:
+                  level: 60
+      description: Set the product volume level.
+      tags:
+        - Volume
+  /BeoZone/Zone/Sound/Volume/Speaker/Muted:
+    get:
+      summary: Product  Mute
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  muted:
+                    type: boolean
+                  _capabilities:
+                    type: object
+                    properties:
+                      editable:
+                        type: array
+                        items:
+                          type: string
+                  _links:
+                    type: object
+                    properties:
+                      /relation/modify:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                x-examples:
+                  Example 1:
+                    muted: false
+                    _capabilities:
+                      editable:
+                        - muted
+                    _links:
+                      /relation/modify:
+                        href: ./
+              examples:
+                Mute state:
+                  value:
+                    muted: true
+                    _capabilities:
+                      editable:
+                        - string
+                    _links:
+                      /relation/modify:
+                        href: string
+      operationId: get-mute-state
+      description: Poll if the product speakers are muted or not.
+      tags:
+        - Volume
+        - Mute
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                muted:
+                  type: boolean
+              x-examples:
+                Example 1:
+                  muted: false
+            examples:
+              Mute product:
+                value:
+                  muted: true
+    put:
+      summary: Product Mute
+      operationId: put-mute-state
+      responses:
+        '200':
+          description: OK
+      description: Toggle the product mute state on/off.
+      tags:
+        - Volume
+        - Mute
+  /BeoDevice/powerManagement/standby:
+    get:
+      summary: Product Power State
+      tags:
+        - Power
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  standby:
+                    type: object
+                    properties:
+                      powerState:
+                        type: string
+                      _capabilities:
+                        type: object
+                        properties:
+                          editable:
+                            type: array
+                            items:
+                              type: string
+                          value:
+                            type: object
+                            properties:
+                              powerState:
+                                type: array
+                                items:
+                                  type: string
+                      _links:
+                        type: object
+                        properties:
+                          /relation/modify:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                          self:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                x-examples:
+                  Example 1:
+                    standby:
+                      powerState: standby
+                      _capabilities:
+                        editable:
+                          - powerState
+                        value:
+                          powerState:
+                            - 'on'
+                            - standby
+                            - allStandby
+                            - reboot
+                      _links:
+                        /relation/modify:
+                          href: ./
+                        self:
+                          href: ./
+              examples:
+                Product power state:
+                  value:
+                    standby:
+                      powerState: standby
+                      _capabilities:
+                        editable:
+                          - powerState
+                        value:
+                          powerState:
+                            - 'on'
+                            - standby
+                            - allStandby
+                            - reboot
+                      _links:
+                        /relation/modify:
+                          href: ./
+                        self:
+                          href: ./
+      operationId: get-power-state
+      description: Poll the current power state of the product.
+    put:
+      summary: Product Power State
+      operationId: put-power-state
+      responses:
+        '200':
+          description: OK
+      description: Set the product power state.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                standby:
+                  type: object
+                  properties:
+                    powerState:
+                      type: string
+              x-examples:
+                Example 1:
+                  standby:
+                    powerState: standBy
+            examples:
+              Change product power state to stand by.:
+                value:
+                  standby:
+                    powerState: standBy
+      tags:
+        - Power
+  /BeoZone/Zone/Sound/Volume/Speaker/ContinuousLevelAction:
+    post:
+      summary: Regulate Product Volume
+      operationId: post-volume-up-down
+      responses:
+        '200':
+          description: OK
+      description: |-
+        Regulate the device volume 1 step up or down depending on the body data.
+
+        Setting the continuousLevelTimeoutAction to 0 (ms) will immediately release the volume command, and be interpreted as 1 volume step.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                continuousLevelAction:
+                  type: string
+                continuousLevelTimeoutAction:
+                  type: integer
+              x-examples:
+                Example 1:
+                  continuousLevelAction: continuousUp
+                  continuousLevelTimeoutAction: 0
+            examples:
+              Turn volume one step up:
+                value:
+                  continuousLevelAction: continuousUp
+                  continuousLevelTimeoutAction: 0
+      tags:
+        - Volume
+  /BeoZone/Zone/ActiveSources:
+    get:
+      summary: Product Active Sources
+      tags:
+        - Sources
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-active-sources
+      description: Poll the product active sources.
+    post:
+      summary: Product Active Sources
+      operationId: post-active-source
+      responses:
+        '200':
+          description: OK
+      description: Set the product active source.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                primaryExperience:
+                  type: object
+                  properties:
+                    source:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        friendlyName:
+                          type: string
+                        product:
+                          type: object
+                          properties:
+                            jid:
+                              type: string
+                            friendlyName:
+                              type: string
+              x-examples:
+                Example 1:
+                  primaryExperience:
+                    source:
+                      id: 'beoradio:my_id@products.bang-olufsen.com'
+                      friendlyName: B&O Radio
+                      product:
+                        jid: my_id@products.bang-olufsen.com
+                        friendlyName: Stue
+            examples:
+              Activate B&O radio source:
+                value:
+                  primaryExperience:
+                    source:
+                      id: 'beoradio:my_id@products.bang-olufsen.com'
+                      friendlyName: B&O Radio
+                      product:
+                        jid: my_id@products.bang-olufsen.com
+                        friendlyName: Stue
+      tags:
+        - Sources
+  /BeoZone/Zone/Sound/Mode/Active:
+    get:
+      summary: Product Active Sound Mode
+      tags:
+        - Sound
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  active:
+                    type: integer
+                x-examples:
+                  Example 1:
+                    active: 1
+              examples:
+                Sound mode:
+                  value:
+                    active: 1
+      operationId: get-active-sound-mode
+      description: Poll the product active sound mode.
+  /BeoZone/Zone/Sources/:
+    get:
+      summary: Product Sources
+      tags:
+        - Sources
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Sources:
+                  value:
+                    sources:
+                      - - 'spotify:my_id@products.bang-olufsen.com'
+                        - id: 'spotify:my_id@products.bang-olufsen.com'
+                          friendlyName: Spotify
+                          sourceType:
+                            type: SPOTIFY
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: false
+                          recommendedIrMapping:
+                            - format: 0
+                              unit: 0
+                              command: 146
+                            - format: 11
+                              unit: 0
+                              command: 150
+                          contentProtection:
+                            schemeList:
+                              - PROPRIETARY
+                          embeddedBinary:
+                            schemeList:
+                              - SPOTIFY_EMBEDDED_SDK
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          remoteLists:
+                            - music
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                          _links:
+                            /relation/modify:
+                              href: ./spotify%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=spotify%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./spotify%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./spotify%3amy_id%40products.bang-olufsen.com
+                      - - 'beoradio:my_id@products.bang-olufsen.com'
+                        - id: 'beoradio:my_id@products.bang-olufsen.com'
+                          friendlyName: B&O Radio
+                          sourceType:
+                            type: BEO RADIO
+                          category: RADIO
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: true
+                          recommendedIrMapping:
+                            - format: 0
+                              unit: 0
+                              command: 129
+                            - format: 11
+                              unit: 0
+                              command: 129
+                            - format: 11
+                              unit: 1
+                              command: 129
+                            - format: 0
+                              unit: 0
+                              command: 147
+                            - format: 11
+                              unit: 0
+                              command: 147
+                          contentProtection:
+                            schemeList:
+                              - NONE
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          remoteLists:
+                            - music
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                              - inUse
+                          _links:
+                            /relation/modify:
+                              href: ./beoradio%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=beoradio%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./beoradio%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./beoradio%3amy_id%40products.bang-olufsen.com
+                      - - 'music:my_id@products.bang-olufsen.com'
+                        - id: 'music:my_id@products.bang-olufsen.com'
+                          friendlyName: Music
+                          sourceType:
+                            type: MUSIC
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: true
+                          recommendedIrMapping:
+                            - format: 0
+                              unit: 0
+                              command: 145
+                            - format: 11
+                              unit: 0
+                              command: 145
+                            - format: 11
+                              unit: 0
+                              command: 148
+                            - format: 0
+                              unit: 0
+                              command: 150
+                            - format: 11
+                              unit: 1
+                              command: 150
+                          contentProtection:
+                            schemeList:
+                              - PROPRIETARY
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          remoteLists:
+                            - music
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                          _links:
+                            /relation/modify:
+                              href: ./music%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=music%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./music%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./music%3amy_id%40products.bang-olufsen.com
+                      - - 'toslink:my_id@products.bang-olufsen.com'
+                        - id: 'toslink:my_id@products.bang-olufsen.com'
+                          friendlyName: Optical
+                          sourceType:
+                            type: TOSLINK
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: true
+                          recommendedIrMapping:
+                            - format: 11
+                              unit: 3
+                              command: 131
+                          contentProtection:
+                            schemeList:
+                              - PROPRIETARY
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          remoteLists:
+                            - music
+                          lowLatency: false
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                          _links:
+                            /relation/modify:
+                              href: ./toslink%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=toslink%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./toslink%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./toslink%3amy_id%40products.bang-olufsen.com
+                      - - 'qplay:my_id@products.bang-olufsen.com'
+                        - id: 'qplay:my_id@products.bang-olufsen.com'
+                          friendlyName: QPlay
+                          sourceType:
+                            type: QPLAY
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: true
+                          recommendedIrMapping:
+                            - format: 0
+                              unit: 0
+                              command: 148
+                            - format: 11
+                              unit: 2
+                              command: 150
+                          contentProtection:
+                            schemeList:
+                              - PROPRIETARY
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                          _links:
+                            /relation/modify:
+                              href: ./qplay%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=qplay%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./qplay%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./qplay%3amy_id%40products.bang-olufsen.com
+                      - - 'bluetooth:my_id@products.bang-olufsen.com'
+                        - id: 'bluetooth:my_id@products.bang-olufsen.com'
+                          friendlyName: Bluetooth
+                          sourceType:
+                            type: BLUETOOTH
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: true
+                          recommendedIrMapping:
+                            - format: 11
+                              unit: 2
+                              command: 131
+                          contentProtection:
+                            schemeList:
+                              - PROPRIETARY
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                          _links:
+                            /relation/modify:
+                              href: ./bluetooth%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=bluetooth%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./bluetooth%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./bluetooth%3amy_id%40products.bang-olufsen.com
+                      - - 'linein:my_id@products.bang-olufsen.com'
+                        - id: 'linein:my_id@products.bang-olufsen.com'
+                          friendlyName: Line-In
+                          sourceType:
+                            type: LINE IN
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: true
+                          recommendedIrMapping:
+                            - format: 0
+                              unit: 0
+                              command: 131
+                            - format: 11
+                              unit: 0
+                              command: 131
+                          contentProtection:
+                            schemeList:
+                              - PROPRIETARY
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          lowLatency: false
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                          _links:
+                            /relation/modify:
+                              href: ./linein%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=linein%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./linein%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./linein%3amy_id%40products.bang-olufsen.com
+                      - - 'airplay:my_id@products.bang-olufsen.com'
+                        - id: 'airplay:my_id@products.bang-olufsen.com'
+                          friendlyName: AirPlay
+                          sourceType:
+                            type: AIRPLAY
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: false
+                          recommendedIrMapping:
+                            - format: 11
+                              unit: 2
+                              command: 148
+                          contentProtection:
+                            schemeList:
+                              - BLOCK
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                              - enableMultiroom
+                          _links:
+                            /relation/modify:
+                              href: ./airplay%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=airplay%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./airplay%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./airplay%3amy_id%40products.bang-olufsen.com
+                      - - 'deezer:my_id@products.bang-olufsen.com'
+                        - id: 'deezer:my_id@products.bang-olufsen.com'
+                          friendlyName: Deezer
+                          sourceType:
+                            type: DEEZER
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: true
+                          recommendedIrMapping: []
+                          contentProtection:
+                            schemeList:
+                              - PROPRIETARY
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                          _links:
+                            /relation/modify:
+                              href: ./deezer%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=deezer%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./deezer%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./deezer%3amy_id%40products.bang-olufsen.com
+                      - - 'googlecast:my_id@products.bang-olufsen.com'
+                        - id: 'googlecast:my_id@products.bang-olufsen.com'
+                          friendlyName: Chromecast built-in
+                          sourceType:
+                            type: GC4A
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: false
+                          recommendedIrMapping: []
+                          contentProtection:
+                            schemeList:
+                              - BLOCK
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          termsAndConditions: accepted
+                          shareUsageData: true
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                          _links:
+                            /relation/modify:
+                              href: ./googlecast%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=googlecast%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./googlecast%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./googlecast%3amy_id%40products.bang-olufsen.com
+                      - - 'dlna:my_id@products.bang-olufsen.com'
+                        - id: 'dlna:my_id@products.bang-olufsen.com'
+                          friendlyName: Music stream
+                          sourceType:
+                            type: DLNA_DMR
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: false
+                          recommendedIrMapping:
+                            - format: 11
+                              unit: 1
+                              command: 132
+                            - format: 11
+                              unit: 1
+                              command: 148
+                          contentProtection:
+                            schemeList:
+                              - PROPRIETARY
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                          _links:
+                            /relation/modify:
+                              href: ./dlna%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=dlna%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./dlna%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./dlna%3amy_id%40products.bang-olufsen.com
+                      - - 'alarm:my_id@products.bang-olufsen.com'
+                        - id: 'alarm:my_id@products.bang-olufsen.com'
+                          friendlyName: Alarm
+                          sourceType:
+                            type: UNDEFINED
+                          category: MUSIC
+                          inUse: true
+                          profile: ''
+                          borrowed: false
+                          linkable: false
+                          recommendedIrMapping: []
+                          contentProtection:
+                            schemeList:
+                              - PROPRIETARY
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                          _links:
+                            /relation/modify:
+                              href: ./alarm%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=alarm%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./alarm%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./alarm%3amy_id%40products.bang-olufsen.com
+                      - - 'radio:my_id@products.bang-olufsen.com'
+                        - id: 'radio:my_id@products.bang-olufsen.com'
+                          friendlyName: TuneIn
+                          sourceType:
+                            type: TUNEIN
+                          category: RADIO
+                          inUse: false
+                          profile: ''
+                          borrowed: false
+                          linkable: false
+                          recommendedIrMapping: []
+                          contentProtection:
+                            schemeList:
+                              - NONE
+                          embeddedBinary:
+                            schemeList: []
+                          product:
+                            jid: my_id@products.bang-olufsen.com
+                            friendlyName: Stue
+                          jid: my_id@products.bang-olufsen.com
+                          _capabilities:
+                            editable:
+                              - friendlyName
+                              - inUse
+                          _links:
+                            /relation/modify:
+                              href: ./radio%3amy_id%40products.bang-olufsen.com
+                            /relation/move:
+                              href: './move?id=radio%3amy_id%40products.bang-olufsen.com&moveto={index}'
+                              templated: true
+                            /relation/reset:
+                              href: ./radio%3amy_id%40products.bang-olufsen.com/reset
+                            self:
+                              href: ./radio%3amy_id%40products.bang-olufsen.com
+      operationId: get-sources
+      description: Pol the procuct sources.
+  /BeoDevice/termsAndConditions/:
+    get:
+      summary: Product Terms
+      tags:
+        - Terms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  profile:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      version:
+                        type: integer
+                      _links:
+                        type: object
+                        properties:
+                          self:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                      termsAndConditions:
+                        type: object
+                        properties:
+                          acknowledgement:
+                            type: object
+                            properties:
+                              state:
+                                type: string
+                              _capabilities:
+                                type: object
+                                properties:
+                                  editable:
+                                    type: array
+                                    items:
+                                      type: string
+                                  value:
+                                    type: object
+                                    properties:
+                                      state:
+                                        type: array
+                                        items:
+                                          type: string
+                              _links:
+                                type: object
+                                properties:
+                                  /relation/modify:
+                                    type: object
+                                    properties:
+                                      href:
+                                        type: string
+                x-examples:
+                  Example 1:
+                    profile:
+                      name: termsAndConditionsProfile
+                      version: 1
+                      _links:
+                        self:
+                          href: ./
+                      termsAndConditions:
+                        acknowledgement:
+                          state: accepted
+                          _capabilities:
+                            editable:
+                              - state
+                            value:
+                              state:
+                                - accepted
+                                - declined
+                          _links:
+                            /relation/modify:
+                              href: ./acknowledgement
+              examples:
+                Terms and conditions:
+                  value:
+                    profile:
+                      name: termsAndConditionsProfile
+                      version: 1
+                      _links:
+                        self:
+                          href: ./
+                      termsAndConditions:
+                        acknowledgement:
+                          state: accepted
+                          _capabilities:
+                            editable:
+                              - state
+                            value:
+                              state:
+                                - accepted
+                                - declined
+                          _links:
+                            /relation/modify:
+                              href: ./acknowledgement
+      operationId: get-terms-and-conditions
+      description: Poll the product terms and conditions.
+  /BeoZone/Zone/Sound/Adjustment:
+    get:
+      summary: Product Sound Adjustment
+      tags:
+        - Sound
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  adjustment:
+                    type: object
+                    properties:
+                      bass:
+                        type: integer
+                      treble:
+                        type: integer
+                      loudness:
+                        type: boolean
+                      _capabilities:
+                        type: object
+                        properties:
+                          editable:
+                            type: array
+                            items:
+                              type: string
+                          range:
+                            type: object
+                            properties:
+                              bass:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    min:
+                                      type: integer
+                                    max:
+                                      type: integer
+                                    step:
+                                      type: integer
+                              treble:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    min:
+                                      type: integer
+                                    max:
+                                      type: integer
+                                    step:
+                                      type: integer
+                      _links:
+                        type: object
+                        properties:
+                          /relation/modify:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                          /relation/reset:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                x-examples:
+                  Example 1:
+                    adjustment:
+                      bass: 0
+                      treble: 0
+                      loudness: true
+                      _capabilities:
+                        editable:
+                          - bass
+                          - treble
+                          - loudness
+                        range:
+                          bass:
+                            - min: -10
+                              max: 10
+                              step: 1
+                          treble:
+                            - min: -10
+                              max: 10
+                              step: 1
+                      _links:
+                        /relation/modify:
+                          href: ./
+                        /relation/reset:
+                          href: ./reset
+              examples:
+                Get sound adjustmentExample 1:
+                  value:
+                    adjustment:
+                      bass: 0
+                      treble: 0
+                      loudness: true
+                      _capabilities:
+                        editable:
+                          - bass
+                          - treble
+                          - loudness
+                        range:
+                          bass:
+                            - min: -10
+                              max: 10
+                              step: 1
+                          treble:
+                            - min: -10
+                              max: 10
+                              step: 1
+                      _links:
+                        /relation/modify:
+                          href: ./
+                        /relation/reset:
+                          href: ./reset
+      operationId: get-sound-adjustment
+      description: Poll the product sound settings.
+    post:
+      summary: Product Sound Adjustment
+      operationId: post-sound-adjustment
+      responses:
+        '200':
+          description: OK
+      description: Adjust the product sound settings.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                adjustment:
+                  type: object
+                  properties:
+                    bass:
+                      type: integer
+                    treble:
+                      type: integer
+              x-examples:
+                Example 1:
+                  adjustment:
+                    bass: 0
+                    treble: 0
+            examples:
+              Adjust bass and treble:
+                value:
+                  adjustment:
+                    bass: 2
+                    treble: 0
+      tags:
+        - Sound
+  /BeoZone/Zone/SourceActivation:
+    post:
+      summary: Product Source Activation
+      responses:
+        '200':
+          description: OK
+      operationId: post-source-activation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                primaryExperience:
+                  type: object
+                  properties:
+                    activationStrategy:
+                      type: string
+                    localUIBehaviour:
+                      type: string
+              x-examples:
+                Example 1:
+                  primaryExperience:
+                    activationStrategy: automatic
+                    localUIBehaviour: longPressJoin
+            examples:
+              Set product source activation:
+                value:
+                  primaryExperience:
+                    activationStrategy: automatic
+                    localUIBehaviour: longPressJoin
+      description: Set the product source activation.
+      tags:
+        - Sources
+    get:
+      summary: Product Source Activation
+      operationId: get-source-activation
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  primaryExperience:
+                    type: object
+                    properties:
+                      activationStrategy:
+                        type: string
+                      localUIBehaviour:
+                        type: string
+                      _capabilities:
+                        type: object
+                        properties:
+                          editable:
+                            type: array
+                            items:
+                              type: string
+                          value:
+                            type: object
+                            properties:
+                              activationStrategy:
+                                type: array
+                                items:
+                                  type: string
+                              localUIBehaviour:
+                                type: array
+                                items:
+                                  type: string
+                      _default:
+                        type: object
+                        properties:
+                          activationStrategy:
+                            type: string
+                      _links:
+                        type: object
+                        properties:
+                          /relation/modify:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                x-examples:
+                  Example 1:
+                    primaryExperience:
+                      activationStrategy: automatic
+                      localUIBehaviour: longPressJoin
+                      _capabilities:
+                        editable:
+                          - activationStrategy
+                          - localUIBehaviour
+                        value:
+                          activationStrategy:
+                            - automatic
+                          localUIBehaviour:
+                            - longPressSilence
+                            - doubleTapCycle
+                            - longPressJoin
+                      _default:
+                        activationStrategy: lastDiscovered
+                      _links:
+                        /relation/modify:
+                          href: ./
+              examples:
+                Product source activation:
+                  value:
+                    primaryExperience:
+                      activationStrategy: automatic
+                      localUIBehaviour: longPressJoin
+                      _capabilities:
+                        editable:
+                          - activationStrategy
+                          - localUIBehaviour
+                        value:
+                          activationStrategy:
+                            - automatic
+                          localUIBehaviour:
+                            - longPressSilence
+                            - doubleTapCycle
+                            - longPressJoin
+                      _default:
+                        activationStrategy: lastDiscovered
+                      _links:
+                        /relation/modify:
+                          href: ./
+      description: Poll the product source activation settings.
+      tags:
+        - Sources
+  /BeoZone/Zone/Sound/Volume/Speaker/DefaultLevel:
+    post:
+      summary: Product Volume Default Level
+      tags:
+        - Volume
+      responses:
+        '200':
+          description: OK
+      operationId: post-volume-default-level
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /BeoZone/Zone/Sound/Volume/Speaker/Range:
+    post:
+      summary: Product Volume Range
+      tags:
+        - Volume
+      responses:
+        '200':
+          description: OK
+      operationId: post-volume-range
+      description: Set the product volume range
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                range:
+                  type: object
+                  properties:
+                    minimum:
+                      type: integer
+                    maximum:
+                      type: integer
+              x-examples:
+                Example 1:
+                  range:
+                    minimum: 0
+                    maximum: 80
+            examples:
+              Volume range:
+                value:
+                  range:
+                    minimum: 0
+                    maximum: 80
+    get:
+      summary: Product Volume Range
+      operationId: get-volume-range
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  range:
+                    type: object
+                    properties:
+                      minimum:
+                        type: integer
+                      maximum:
+                        type: integer
+                x-examples:
+                  Example 1:
+                    range:
+                      minimum: 0
+                      maximum: 80
+              examples:
+                Get the volume range:
+                  value:
+                    range:
+                      minimum: 0
+                      maximum: 80
+                      _capabilities:
+                        editable:
+                          - maximum
+                        range:
+                          maximum:
+                            - min: 0
+                              max: 90
+                              step: 1
+                      _links:
+                        /relation/modify:
+                          href: ./
+      description: Poll the product volume range.
+      tags:
+        - Volume
+  /BeoZone/Zone/Sound/Mode/1/:
+    get:
+      summary: Product Sound Mode
+      tags:
+        - Sound
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mode:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      friendlyName:
+                        type: string
+                      digit:
+                        type: integer
+                      balance:
+                        type: integer
+                      loudness:
+                        type: boolean
+                      _capabilities:
+                        type: object
+                        properties:
+                          editable:
+                            type: array
+                            items:
+                              type: string
+                          range:
+                            type: object
+                            properties:
+                              balance:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    min:
+                                      type: integer
+                                    max:
+                                      type: integer
+                                    step:
+                                      type: integer
+                      _links:
+                        type: object
+                        properties:
+                          /relation/modify:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                          /relation/reset:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+              examples:
+                Sound mode:
+                  value:
+                    mode:
+                      id: 1
+                      friendlyName: default
+                      digit: 1
+                      balance: 0
+                      loudness: true
+                      _capabilities:
+                        editable:
+                          - balance
+                          - loudness
+                        range:
+                          balance:
+                            - min: -10
+                              max: 10
+                              step: 1
+                      _links:
+                        /relation/modify:
+                          href: ./
+                        /relation/reset:
+                          href: ./reset
+      operationId: get-sound-mode
+      description: Poll the default product sound mode.
+    post:
+      summary: Product Sound Mode
+      operationId: post-sound-mode
+      responses:
+        '200':
+          description: OK
+      description: Set the product sound mode settings.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mode:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    friendlyName:
+                      type: string
+                    digit:
+                      type: integer
+                    frequencyTilt:
+                      type: integer
+                    balance:
+                      type: integer
+                    contentProcessing:
+                      type: string
+                    upmix:
+                      type: boolean
+                    virtualize:
+                      type: boolean
+                    lfeTuning:
+                      type: boolean
+              x-examples:
+                Example 1:
+                  mode:
+                    id: 1
+                    friendlyName: default
+                    digit: 1
+                    frequencyTilt: 0
+                    balance: 0
+                    contentProcessing: 'off'
+                    upmix: false
+                    virtualize: false
+                    lfeTuning: false
+            examples:
+              Sound mode settings:
+                value:
+                  mode:
+                    id: 1
+                    friendlyName: default
+                    digit: 1
+                    frequencyTilt: 0
+                    balance: 0
+                    contentProcessing: 'off'
+                    upmix: false
+                    virtualize: false
+                    lfeTuning: false
+      tags:
+        - Sound
+    parameters: []
+  /BeoZone/Zone/PlayQueue/:
+    post:
+      summary: Play From Queue
+      responses:
+        '200':
+          description: OK
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      message:
+                        type: string
+                x-examples:
+                  Example 1:
+                    error:
+                      type: FORBIDDEN
+                      message: PQ with id radio doesn't exist!
+      operationId: post-queue
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: instantplay
+          description: Play the current item
+      description: 'Play from the current queue. Only supported by sources: spotify, music'
+      tags:
+        - Queue
+  /BeoZone/Zone/Stream:
+    parameters: []
+    get:
+      summary: Product Stream
+      tags:
+        - Stream
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  features:
+                    type: array
+                    items:
+                      type: string
+                x-examples:
+                  Example 1:
+                    features:
+                      - PAUSE
+                      - PLAY
+                      - SKIP
+                      - STOP
+              examples:
+                Product stream features:
+                  value:
+                    features:
+                      - PAUSE
+                      - PLAY
+                      - SKIP
+                      - STOP
+      operationId: get-stream
+      description: Poll the product stream.
+  /BeoZone/Zone/Stream/Play:
+    post:
+      summary: Play Stream
+      tags:
+        - Stream
+      responses:
+        '200':
+          description: OK
+      operationId: post-stream-play
+      description: Play the current item in the stream
+  /BeoZone/Zone/Stream/Pause:
+    post:
+      summary: Pause Stream
+      tags:
+        - Stream
+      responses:
+        '200':
+          description: OK
+      operationId: post-stream-pause
+      description: Pause the playing item in the stream
+    parameters: []
+  /BeoZone/Zone/Stream/Skip:
+    post:
+      summary: Skip Stream
+      tags:
+        - Stream
+      responses:
+        '200':
+          description: OK
+      operationId: post-stream-skip
+      description: Skip the playing item in the stream.
+    parameters: []
+  /BeoZone/Zone/Stream/Stop:
+    post:
+      summary: Stop Stream
+      tags:
+        - Stream
+      responses:
+        '200':
+          description: OK
+      operationId: post-stream-stop
+      description: Stop the playing item in the stream
+    parameters: []
+  /BeoZone/Zone/Stream/Forward:
+    post:
+      summary: Forward Stream
+      tags:
+        - Stream
+      responses:
+        '200':
+          description: OK
+      operationId: post-stream-forward
+      description: Forward to next item in the stream.
+    parameters: []
+  /BeoZone/Zone/PlayQueue:
+    get:
+      summary: Play Queue
+      tags:
+        - Queue
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  playQueue:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      offset:
+                        type: integer
+                      count:
+                        type: integer
+                      startOffset:
+                        type: integer
+                      total:
+                        type: integer
+                      playNowId:
+                        type: string
+                      random:
+                        type: string
+                      repeat:
+                        type: string
+                      playQueueItem:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      revision:
+                        type: integer
+                      _capabilities:
+                        type: object
+                        properties:
+                          editable:
+                            type: array
+                            items:
+                              type: string
+                          value:
+                            type: object
+                            properties:
+                              random:
+                                type: array
+                                items:
+                                  type: string
+                              repeat:
+                                type: array
+                                items:
+                                  type: string
+                          supportedItems:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                item:
+                                  type: string
+                                variants:
+                                  type: array
+                                  items:
+                                    type: string
+                          supportedMediaTypes:
+                            type: array
+                            items:
+                              type: string
+                      _links:
+                        type: object
+                        properties:
+                          /relation/modify:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                          /relation/playpointer:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                x-examples:
+                  Example 1:
+                    playQueue:
+                      id: music
+                      offset: 0
+                      count: 0
+                      startOffset: 0
+                      total: 0
+                      playNowId: ''
+                      random: random
+                      repeat: repeatAll
+                      playQueueItem: []
+                      revision: 13
+                      _capabilities:
+                        editable:
+                          - random
+                          - repeat
+                        value:
+                          random:
+                            - 'off'
+                            - random
+                          repeat:
+                            - 'off'
+                            - repeatCurrentItem
+                            - repeatAll
+                        supportedItems:
+                          - item: artist
+                            variants:
+                              - dlna
+                              - deezer
+                          - item: playList
+                            variants:
+                              - dlna
+                              - deezer
+                          - item: track
+                            variants:
+                              - dlna
+                              - deezer
+                          - item: album
+                            variants:
+                              - dlna
+                              - deezer
+                          - item: station
+                            variants:
+                              - deezer
+                          - item: moodWheelItem
+                        supportedMediaTypes:
+                          - audio/3gpp
+                          - audio/aiff
+                          - audio/m4a
+                          - audio/mp4
+                          - audio/mpeg
+                          - audio/vnd.dlna.adts
+                          - audio/wav
+                          - audio/wave
+                          - audio/x-aiff
+                          - audio/x-flac
+                          - audio/x-m4a
+                          - audio/x-ms-wma
+                          - audio/x-wav
+                      _links:
+                        /relation/modify:
+                          href: .
+                        /relation/playpointer:
+                          href: /BeoZone/Zone/PlayQueue/PlayPointer
+              examples:
+                Play queue:
+                  value:
+                    playQueue:
+                      id: music
+                      offset: 0
+                      count: 0
+                      startOffset: 0
+                      total: 0
+                      playNowId: ''
+                      random: random
+                      repeat: repeatAll
+                      playQueueItem: []
+                      revision: 13
+                      _capabilities:
+                        editable:
+                          - random
+                          - repeat
+                        value:
+                          random:
+                            - 'off'
+                            - random
+                          repeat:
+                            - 'off'
+                            - repeatCurrentItem
+                            - repeatAll
+                        supportedItems:
+                          - item: artist
+                            variants:
+                              - dlna
+                              - deezer
+                          - item: playList
+                            variants:
+                              - dlna
+                              - deezer
+                          - item: track
+                            variants:
+                              - dlna
+                              - deezer
+                          - item: album
+                            variants:
+                              - dlna
+                              - deezer
+                          - item: station
+                            variants:
+                              - deezer
+                          - item: moodWheelItem
+                        supportedMediaTypes:
+                          - audio/3gpp
+                          - audio/aiff
+                          - audio/m4a
+                          - audio/mp4
+                          - audio/mpeg
+                          - audio/vnd.dlna.adts
+                          - audio/wav
+                          - audio/wave
+                          - audio/x-aiff
+                          - audio/x-flac
+                          - audio/x-m4a
+                          - audio/x-ms-wma
+                          - audio/x-wav
+                      _links:
+                        /relation/modify:
+                          href: .
+                        /relation/playpointer:
+                          href: /BeoZone/Zone/PlayQueue/PlayPointer
+      operationId: get-play-queue
+      description: Poll the product queue.
+  /BeoZone/Zone/ActiveSources/primaryExperience/:
+    get:
+      summary: Product Primary Active Source
+      tags:
+        - ActiveSources
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    primaryExperience:
+                      source:
+                        id: 'beoradio:my_id@products.bang-olufsen.com'
+                        friendlyName: B&O Radio
+                        sourceType:
+                          type: BEO RADIO
+                        category: RADIO
+                        inUse: true
+                        profile: ''
+                        linkable: true
+                        recommendedIrMapping:
+                          - format: 0
+                            unit: 0
+                            command: 129
+                          - format: 11
+                            unit: 0
+                            command: 129
+                          - format: 11
+                            unit: 1
+                            command: 129
+                          - format: 0
+                            unit: 0
+                            command: 147
+                          - format: 11
+                            unit: 0
+                            command: 147
+                        contentProtection:
+                          schemeList:
+                            - NONE
+                        embeddedBinary:
+                          schemeList: []
+                        product:
+                          jid: my_id@products.bang-olufsen.com
+                          friendlyName: Stue
+                        _capabilities:
+                          editable:
+                            - id
+                          value:
+                            id:
+                              - 'airplay:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'deezer:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'spotify:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'radio:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'linein:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'dlna:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'toslink:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'alarm:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'beoradio:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'qplay:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'bluetooth:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'music:3051.1293042.32837416@products.bang-olufsen.com'
+                              - 'airplay:my_id@products.bang-olufsen.com'
+                              - 'deezer:my_id@products.bang-olufsen.com'
+                              - 'spotify:my_id@products.bang-olufsen.com'
+                              - 'radio:my_id@products.bang-olufsen.com'
+                              - 'googlecast:my_id@products.bang-olufsen.com'
+                              - 'linein:my_id@products.bang-olufsen.com'
+                              - 'dlna:my_id@products.bang-olufsen.com'
+                              - 'toslink:my_id@products.bang-olufsen.com'
+                              - 'alarm:my_id@products.bang-olufsen.com'
+                              - 'beoradio:my_id@products.bang-olufsen.com'
+                              - 'qplay:my_id@products.bang-olufsen.com'
+                              - 'bluetooth:my_id@products.bang-olufsen.com'
+                              - 'music:my_id@products.bang-olufsen.com'
+                      listenerList:
+                        listener:
+                          - jid: 3051.1293042.32837416@products.bang-olufsen.com
+                            _links:
+                              /relation/delete:
+                                href: ./primaryExperience/?jid=3051.1293042.32837416%40products.bang-olufsen.com
+                          - jid: my_id@products.bang-olufsen.com
+                            _links:
+                              /relation/delete:
+                                href: ./primaryExperience/?jid=my_id%40products.bang-olufsen.com
+                        _capabilities:
+                          editable:
+                            - listener.jid
+                          value:
+                            listener.jid:
+                              - 3051.1293042.32837416@products.bang-olufsen.com
+                              - my_id@products.bang-olufsen.com
+                        _links:
+                          /relation/create:
+                            href: ./primaryExperience
+                      _links:
+                        /relation/delete:
+                          href: ./primaryExperience
+                    activeSources:
+                      primary: 'beoradio:my_id@products.bang-olufsen.com'
+                      primaryJid: my_id@products.bang-olufsen.com
+                properties:
+                  primaryExperience:
+                    type: object
+                    properties:
+                      source:
+                        $ref: '#/components/schemas/source'
+                      listenerList:
+                        type: object
+                        properties:
+                          listener:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                jid:
+                                  type: string
+                                _links:
+                                  type: object
+                                  properties:
+                                    /relation/delete:
+                                      type: object
+                                      properties:
+                                        href:
+                                          type: string
+                          _capabilities:
+                            type: object
+                            properties:
+                              editable:
+                                type: array
+                                items:
+                                  type: string
+                              value:
+                                type: object
+                                properties:
+                                  listener.jid:
+                                    type: array
+                                    items:
+                                      type: string
+                          _links:
+                            type: object
+                            properties:
+                              /relation/create:
+                                type: object
+                                properties:
+                                  href:
+                                    type: string
+                      _links:
+                        type: object
+                        properties:
+                          /relation/delete:
+                            type: object
+                            properties:
+                              href:
+                                type: string
+                  activeSources:
+                    type: object
+                    properties:
+                      primary:
+                        type: string
+                      primaryJid:
+                        type: string
+      operationId: get-primary-active-source
+      description: Poll the product primary active experince (source).
+components:
+  schemas:
+    product:
+      title: product
+      x-stoplight:
+        id: mic7u2skzcn34
+      type: object
+      description: The product information.
+      properties:
+        jid:
+          type: string
+          description: Product join ID
+        friendlyName:
+          type: string
+          description: Product userdefined name
+    recommendedIrMapping:
+      title: Recommended IR mapping
+      x-stoplight:
+        id: e0yl1rkd30vrz
+      type: array
+      items:
+        type: object
+        properties:
+          format:
+            type: integer
+          unit:
+            type: integer
+          command:
+            type: integer
+      description: The recommended IR mapping data.
+    contentProtection:
+      type: object
+      properties:
+        contentProtection:
+          type: object
+          properties:
+            schemeList:
+              type: array
+              items:
+                type: string
+      x-examples:
+        Example 1:
+          contentProtection:
+            schemeList:
+              - PROPRIETARY
+      description: The type of content protection data.
+    embeddedBinary:
+      type: object
+      properties:
+        contentProtection:
+          type: object
+          properties:
+            schemeList:
+              type: array
+              items:
+                type: string
+      x-examples:
+        Example 1:
+          contentProtection:
+            schemeList:
+              - PROPRIETARY
+      title: Embedded Binary
+      description: The embedded binary data.
+      x-stoplight:
+        id: 2d5b47509fdad
+    source:
+      type: object
+      properties:
+        id:
+          type: string
+        friendlyName:
+          type: string
+        sourceType:
+          type: object
+          properties:
+            type:
+              type: string
+        category:
+          type: string
+        inUse:
+          type: boolean
+        profile:
+          type: string
+        linkable:
+          type: boolean
+        recommendedIrMapping:
+          $ref: '#/components/schemas/recommendedIrMapping'
+        contentProtection:
+          $ref: '#/components/schemas/contentProtection'
+        embeddedBinary:
+          $ref: '#/components/schemas/embeddedBinary'
+        product:
+          $ref: '#/components/schemas/product'
+      x-examples:
+        Example 1:
+          id: 'spotify:my_id@products.bang-olufsen.com'
+          friendlyName: Spotify
+          sourceType:
+            type: SPOTIFY
+          category: MUSIC
+          inUse: true
+          profile: ''
+          linkable: false
+          recommendedIrMapping:
+            - format: 0
+              unit: 0
+              command: 146
+            - format: 11
+              unit: 0
+              command: 150
+          contentProtection:
+            schemeList:
+              - PROPRIETARY
+          embeddedBinary:
+            schemeList:
+              - SPOTIFY_EMBEDDED_SDK
+          product:
+            jid: my_id@products.bang-olufsen.com
+            friendlyName: B&O
+      description: The product source data.
+    primaryExperience:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/source'
+          listener: null
+          type: array
+          items:
+            type: string
+        lastUsed:
+          type: string
+        state:
+          type: string
+        _capabilities:
+          type: object
+          properties:
+            supportedNotifications:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  kind:
+                    type: string
+      x-examples:
+        Example 1:
+          source:
+            id: 'spotify:my_id@products.bang-olufsen.com'
+            friendlyName: Spotify
+            sourceType:
+              type: SPOTIFY
+            category: MUSIC
+            inUse: true
+            profile: ''
+            linkable: false
+            recommendedIrMapping:
+              - format: 0
+                unit: 0
+                command: 146
+              - format: 11
+                unit: 0
+                command: 150
+            contentProtection:
+              schemeList:
+                - PROPRIETARY
+            embeddedBinary:
+              schemeList:
+                - SPOTIFY_EMBEDDED_SDK
+            product:
+              jid: my_id@products.bang-olufsen.com
+              friendlyName: B&O
+          listener:
+            - my_id@products.bang-olufsen.com
+          lastUsed: '2023-03-12T11:45:45.844000'
+          state: play
+          _capabilities:
+            supportedNotifications:
+              - type: SOURCE
+                kind: source
+              - type: SOURCE_EXPERIENCE_CHANGED
+                kind: source
+              - type: PLAY_QUEUE_CHANGED
+                kind: playing
+              - type: NOW_PLAYING_ENDED
+                kind: playing
+              - type: STREAMING_STATUS
+                kind: streaming
+              - type: PROGRESS_INFORMATION
+                kind: playing
+              - type: NOW_PLAYING_STORED_MUSIC
+                kind: playing
+      description: The product primary experience data.
+    dateTime:
+      type: object
+      properties:
+        dateTime:
+          type: string
+      x-examples:
+        Example 1:
+          dateTime: '2023-03-12T14:37:56'
+      description: The product date-time data.
+    dateTimeMode:
+      type: object
+      properties:
+        dateTimeMode:
+          type: string
+        _capabilities:
+          type: object
+          properties:
+            editable:
+              type: array
+              items:
+                type: string
+            value:
+              type: object
+              properties:
+                dateTimeMode:
+                  type: array
+                  items:
+                    type: string
+      x-examples:
+        Example 1:
+          dateTimeMode: Automatic
+          _capabilities:
+            editable:
+              - dateTimeMode
+            value:
+              dateTimeMode:
+                - Automatic
+                - Manually
+      description: The product date-time mode data.
+    dayLightSaving:
+      type: object
+      properties:
+        daylightSaving:
+          type: string
+        inDaylightSaving:
+          type: boolean
+      x-examples:
+        Example 1:
+          daylightSaving: Automatic
+          inDaylightSaving: false
+      description: The product daylight saving data.
+    country:
+      type: object
+      properties:
+        country:
+          type: string
+        _capabilities:
+          type: object
+          properties:
+            editable:
+              type: array
+              items:
+                type: string
+            value:
+              type: object
+              properties:
+                country:
+                  type: array
+                  items:
+                    type: string
+      x-examples:
+        Example 1:
+          country: 'NO'
+          _capabilities:
+            editable:
+              - country
+            value:
+              country:
+                - AD
+                - AE
+                - AF
+                - AG
+                - AI
+                - AL
+                - AM
+                - AO
+                - AQ
+                - AR
+                - AS
+                - AT
+                - AU
+                - AW
+                - AX
+                - AZ
+                - BA
+                - BB
+                - BD
+                - BE
+                - BF
+                - BG
+                - BH
+                - BI
+                - BJ
+                - BL
+                - BM
+                - BN
+                - BO
+                - BQ
+                - BR
+                - BS
+                - BT
+                - BV
+                - BW
+                - BY
+                - BZ
+                - CA
+                - CC
+                - CD
+                - CF
+                - CG
+                - CH
+                - CI
+                - CK
+                - CL
+                - CM
+                - CN
+                - CO
+                - CR
+                - CU
+                - CV
+                - CW
+                - CX
+                - CY
+                - CZ
+                - DE
+                - DJ
+                - DK
+                - DM
+                - DO
+                - DZ
+                - EC
+                - EE
+                - EG
+                - EH
+                - ER
+                - ES
+                - ET
+                - FI
+                - FJ
+                - FK
+                - FM
+                - FO
+                - FR
+                - GA
+                - GB
+                - GD
+                - GE
+                - GF
+                - GG
+                - GH
+                - GI
+                - GL
+                - GM
+                - GN
+                - GP
+                - GQ
+                - GR
+                - GS
+                - GT
+                - GU
+                - GW
+                - GY
+                - HK
+                - HM
+                - HN
+                - HR
+                - HT
+                - HU
+                - ID
+                - IE
+                - IL
+                - IM
+                - IN
+                - IO
+                - IQ
+                - IR
+                - IS
+                - IT
+                - JE
+                - JM
+                - JO
+                - JP
+                - KE
+                - KG
+                - KH
+                - KI
+                - KM
+                - KN
+                - KP
+                - KR
+                - KW
+                - KY
+                - KZ
+                - LA
+                - LB
+                - LC
+                - LI
+                - LK
+                - LR
+                - LS
+                - LT
+                - LU
+                - LV
+                - LY
+                - MA
+                - MC
+                - MD
+                - ME
+                - MF
+                - MG
+                - MH
+                - MK
+                - ML
+                - MM
+                - MN
+                - MO
+                - MP
+                - MQ
+                - MR
+                - MS
+                - MT
+                - MU
+                - MV
+                - MW
+                - MX
+                - MY
+                - MZ
+                - NA
+                - NC
+                - NE
+                - NF
+                - NG
+                - NI
+                - NL
+                - 'NO'
+                - NP
+                - NR
+                - NU
+                - NZ
+                - OM
+                - PA
+                - PE
+                - PF
+                - PG
+                - PH
+                - PK
+                - PL
+                - PM
+                - PN
+                - PR
+                - PS
+                - PT
+                - PW
+                - PY
+                - QA
+                - RE
+                - RO
+                - RS
+                - RU
+                - RW
+                - SA
+                - SB
+                - SC
+                - SD
+                - SE
+                - SG
+                - SH
+                - SI
+                - SJ
+                - SK
+                - SL
+                - SM
+                - SN
+                - SO
+                - SR
+                - SS
+                - ST
+                - SV
+                - SX
+                - SY
+                - SZ
+                - TC
+                - TD
+                - TF
+                - TG
+                - TH
+                - TJ
+                - TK
+                - TL
+                - TM
+                - TN
+                - TO
+                - TR
+                - TT
+                - TV
+                - TW
+                - TZ
+                - UA
+                - UG
+                - UM
+                - US
+                - UY
+                - UZ
+                - VA
+                - VC
+                - VE
+                - VG
+                - VI
+                - VN
+                - VU
+                - WF
+                - WS
+                - YE
+                - YT
+                - ZA
+                - ZM
+                - ZW
+      description: The product country data.
+    region:
+      type: object
+      properties:
+        region:
+          type: string
+        _capabilities:
+          type: object
+          properties:
+            editable:
+              type: array
+              items:
+                type: string
+            value:
+              type: object
+              properties:
+                region:
+                  type: array
+                  items:
+                    type: string
+      x-examples:
+        Example 1:
+          region: Automatic
+          _capabilities:
+            editable:
+              - region
+            value:
+              region:
+                - Automatic
+    language:
+      type: object
+      properties:
+        language:
+          type: string
+        _capabilities:
+          type: object
+          properties:
+            editable:
+              type: array
+              items:
+                type: string
+            value:
+              type: object
+              properties:
+                language:
+                  type: array
+                  items:
+                    type: string
+      x-examples:
+        Example 1:
+          language: en_GB
+          _capabilities:
+            editable:
+              - language
+            value:
+              language:
+                - da_DK
+                - de_DE
+                - en_GB
+                - es_ES
+                - fr_FR
+                - it_IT
+                - ja_JP
+                - ko_KR
+                - nl_NL
+                - pt_PT
+                - ru_RU
+                - sv_SE
+                - zh_CN
+                - zh_TW
+    timeZone:
+      type: object
+      properties:
+        timeZone:
+          type: string
+        inTimeZone:
+          type: string
+      x-examples:
+        Example 1:
+          timeZone: Automatic
+          inTimeZone: 'UTC+01:00'
+      description: Product time-zone data.
