@@ -4,7 +4,25 @@ x-stoplight:
 info:
   title: beoremote_api
   version: '1.0'
-  description: 'Control Bang Olufsen products supporting the beonet http interface. The api provides control of product volume and sound settings, product sources, play control and polling for product state and currently playing information. '
+  description: |-
+    Control Bang Olufsen products supporting the Net Remote TCP/IP protocol. The API provides control Controls are provided for power, audio, input selection, borrowed sources and transport command and polling for product state and currently playing information. 
+
+    Supported Audio Products:
+
+    - BeoPlay M3
+    - BeoPlay M5
+    - BeoPlay A6
+    - BeoPlay A9 MK2 
+    - BeoSound Essence MK2 
+    - BeoSound Core 
+    - BeoSound Moment 
+    - BeoSound 1
+    - BeoSound 2
+    - BeoSound 35
+    - BeoSound Shape
+    - BeoSound Edge
+
+    The protocol is also supported by B&O video products, but this is not coverd by the API.
   contact:
     name: Ole Chr. Astrup
     email: tanumkroken@astrup.info
@@ -13,7 +31,7 @@ info:
     name: MIT
 servers:
   - description: product
-    url: 'http://BeoSound-Core-id.local:8080'
+    url: 'http://beoproduct.local:8080'
 paths:
   /BeoNotify/Notifications:
     get:
@@ -733,21 +751,6 @@ paths:
       tags:
         - Volume
         - Mute
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                muted:
-                  type: boolean
-              x-examples:
-                Example 1:
-                  muted: false
-            examples:
-              Mute product:
-                value:
-                  muted: true
     put:
       summary: Product Mute
       operationId: put-mute-state
@@ -993,7 +996,7 @@ paths:
                     active: 1
       operationId: get-active-sound-mode
       description: Poll the product active sound mode.
-  /BeoZone/Zone/Sources/:
+  /BeoZone/Zone/Sources:
     get:
       summary: Product Sources
       tags:
@@ -1520,7 +1523,7 @@ paths:
                               href: ./radio%3amy_id%40products.bang-olufsen.com
       operationId: get-sources
       description: Pol the procuct sources.
-  /BeoDevice/termsAndConditions/:
+  /BeoDevice/termsAndConditions:
     get:
       summary: Product Terms
       tags:
@@ -1997,7 +2000,7 @@ paths:
       description: Poll the product volume range.
       tags:
         - Volume
-  /BeoZone/Zone/Sound/Mode/1/:
+  /BeoZone/Zone/Sound/Mode/1:
     get:
       summary: Product Sound Mode
       tags:
@@ -2246,6 +2249,17 @@ paths:
       operationId: post-stream-skip
       description: Skip the playing item in the stream.
     parameters: []
+  /BeoZone/Zone/Stream/Next:
+    post:
+      summary: Skip Stream
+      tags:
+        - Stream
+      responses:
+        '200':
+          description: OK
+      operationId: post-stream-next
+      description: Skip the playing item in the stream.
+    parameters: []
   /BeoZone/Zone/Stream/Stop:
     post:
       summary: Stop Stream
@@ -2267,6 +2281,8 @@ paths:
           description: OK
       operationId: post-stream-forward
       description: Forward to next item in the stream.
+    parameters: []
+  /BeoZone/Zone/Stream/Rewind:
     parameters: []
   /BeoZone/Zone/PlayQueue:
     get:
@@ -2486,7 +2502,7 @@ paths:
                           href: /BeoZone/Zone/PlayQueue/PlayPointer
       operationId: get-play-queue
       description: Poll the product queue.
-  /BeoZone/Zone/ActiveSources/primaryExperience/:
+  /BeoZone/Zone/ActiveSources/primaryExperience:
     get:
       summary: Product Primary Active Source
       tags:
