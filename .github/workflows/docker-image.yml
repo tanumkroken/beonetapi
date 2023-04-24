@@ -7,12 +7,20 @@ on:
     branches: [ "master" ]
 
 jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build the Swagger Docker image
-      run: docker build . --file Dockerfile --tag swagger-dodegen-cli:$(date +%s)
+    codegen:
+        name: Generate python client
+        runs-on: ubuntu-latest
+        steps:
+          - name: Check out the repo
+            uses: actions/checkout@v2
+          - name: Run the codegen process with Docker
+            uses: addnab/docker-run-action@v3
+            with:
+                image: openapitools/openapi-generator-cli:latest
+                options: -v ${{ github.workspace }}:/beonetapi
+                run: |
+                    generate  \
+                    --package-name beoremote-cli  \
+                    -i /openapi_beonet.yml \
+                    -g python \
+                    -o /beonetapi
