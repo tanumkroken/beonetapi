@@ -20,4 +20,4 @@ jobs:
                 options: -v ${{ github.workspace }}:/beoremote
                 run: |
                   echo "Generating code"
-                  /beoremote/run
+                  ../run
