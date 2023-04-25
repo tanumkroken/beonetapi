@@ -1,5 +1,5 @@
 docker run --rm \
-  -v ${PWD}:/local openapitools/openapi-generator-cli generate \
+  generate \
   -i /local/openapi_beonet.yml \
   -g python \
   -o /local/beoremote \
