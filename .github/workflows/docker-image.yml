@@ -18,6 +18,4 @@ jobs:
             with:
                 image: openapitools/openapi-generator-cli:latest
                 options: -v ${{ github.workspace }}:/local
-                run: /
-                  echo "run script"
-                  /local/run.sh
+                run: openapi-generator-cli help
